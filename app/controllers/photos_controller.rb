@@ -5,13 +5,11 @@ class PhotosController < ApplicationController
   # GET /photos.json
   def index
     @photos = Photo.all
-
   end
 
   # GET /photos/1
   # GET /photos/1.json
   def show
-
   end
 
   # GET /photos/new
@@ -23,12 +21,32 @@ class PhotosController < ApplicationController
   def edit
   end
 
+  # new methods to allow likeing and dislikes
+
+  def upvote
+    @photo = Photo.find(params[:id])
+    @photo.upvote_by current_user
+    redirect_to :back
+  end
+
+  def downvote
+    @photo = Photo.find(params[:id])
+    @photo.downvote_by current_user
+    redirect_to :back
+  end
+
+
+
+
+
+
+
   # POST /photos
   # POST /photos.json
   def create
     @photo = Photo.new(photo_params)
     @photo.user = current_user  #devise method for current user
-    
+
     respond_to do |format|
       if @photo.save
         format.html { redirect_to @photo, notice: 'Photo was successfully created.' }

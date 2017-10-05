@@ -51,3 +51,7 @@ class Photo < Sequel::Model # ActiveRecord::Base
   include ImageUploader::Attachment.new(:image) # adds an `image` virtual attribute
 end
 ```
+
+
+one of the main problems with this gem was the permit params inside the photo controller :
+you have to make sure it takes :image and not :image_data

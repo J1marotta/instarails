@@ -1,24 +1,26 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Photos</h1>
+<h1>Your Feed </h1>
 
-<table>
+<table class= "table text-center">
   <thead>
     <tr>
-      <th>Image data</th>
-      <th>User</th>
-      <th>Caption</th>
-      <th colspan="3"></th>
+      <th><strong>Image data</strong></th>
+      <th><strong>UserName</strong></th>
+      <th><strong>Caption</strong></th>
+      <th colspan="5"></th>
+      <br>
     </tr>
-  </thead>
 
+  </thead>
+<br>
   <tbody>
     <% @photos.each do |photo| %>
       <tr>
-        <td><%= photo.image_data %></td>
         <td><img src=" <%=photo.image_url %>"></td>
-        <td><%= photo.user %></td>
+        <td><%= current_user.username %></td>
         <td><%= photo.caption %></td>
+
         <td><%= link_to 'Show', photo %></td>
         <td><%= link_to 'Edit', edit_photo_path(photo) %></td>
         <td><%= link_to 'Destroy', photo, method: :delete, data: { confirm: 'Are you sure?' } %></td>
@@ -29,5 +31,3 @@
 </table>
 
 <br>
-
-<%= link_to 'New Photo', new_photo_path %>

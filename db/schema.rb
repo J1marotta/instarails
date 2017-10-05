@@ -10,7 +10,37 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171005060044) do
+ActiveRecord::Schema.define(version: 20171005083755) do
+
+  create_table "follows", force: :cascade do |t|
+    t.string "follower_type"
+    t.integer "follower_id"
+    t.string "followable_type"
+    t.integer "followable_id"
+    t.datetime "created_at"
+    t.index ["followable_id", "followable_type"], name: "fk_followables"
+    t.index ["follower_id", "follower_type"], name: "fk_follows"
+  end
+
+  create_table "likes", force: :cascade do |t|
+    t.string "liker_type"
+    t.integer "liker_id"
+    t.string "likeable_type"
+    t.integer "likeable_id"
+    t.datetime "created_at"
+    t.index ["likeable_id", "likeable_type"], name: "fk_likeables"
+    t.index ["liker_id", "liker_type"], name: "fk_likes"
+  end
+
+  create_table "mentions", force: :cascade do |t|
+    t.string "mentioner_type"
+    t.integer "mentioner_id"
+    t.string "mentionable_type"
+    t.integer "mentionable_id"
+    t.datetime "created_at"
+    t.index ["mentionable_id", "mentionable_type"], name: "fk_mentionables"
+    t.index ["mentioner_id", "mentioner_type"], name: "fk_mentions"
+  end
 
   create_table "photos", force: :cascade do |t|
     t.text "image_data"
@@ -18,6 +48,12 @@ ActiveRecord::Schema.define(version: 20171005060044) do
     t.string "caption"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "cached_votes_up", default: 0
+    t.integer "cached_votes_down", default: 0
+    t.integer "cached_votes_score", default: 0
+    t.index ["cached_votes_down"], name: "index_photos_on_cached_votes_down"
+    t.index ["cached_votes_score"], name: "index_photos_on_cached_votes_score"
+    t.index ["cached_votes_up"], name: "index_photos_on_cached_votes_up"
     t.index ["user_id"], name: "index_photos_on_user_id"
   end
 
@@ -44,6 +80,22 @@ ActiveRecord::Schema.define(version: 20171005060044) do
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.index ["username"], name: "index_users_on_username", unique: true
+  end
+
+  create_table "votes", force: :cascade do |t|
+    t.string "votable_type"
+    t.integer "votable_id"
+    t.string "voter_type"
+    t.integer "voter_id"
+    t.boolean "vote_flag"
+    t.string "vote_scope"
+    t.integer "vote_weight"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["votable_id", "votable_type", "vote_scope"], name: "index_votes_on_votable_id_and_votable_type_and_vote_scope"
+    t.index ["votable_type", "votable_id"], name: "index_votes_on_votable_type_and_votable_id"
+    t.index ["voter_id", "voter_type", "vote_scope"], name: "index_votes_on_voter_id_and_voter_type_and_vote_scope"
+    t.index ["voter_type", "voter_id"], name: "index_votes_on_voter_type_and_voter_id"
   end
 
 end

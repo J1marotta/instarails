@@ -21,6 +21,18 @@
         <td><%= current_user.username %></td>
         <td><%= photo.caption %></td>
 
+
+        <!--Below uses the act as votable gem  -->
+        <td><%= link_to like_photo_path(photo), method: :put do %>
+          ❤️
+          <%= photo.get_upvotes.size %>
+        <% end %>
+
+        <%= link_to dislike_photo_path(photo), method: :put do %>
+          💔
+          <%= photo.get_downvotes.size %>
+        <% end %></td>
+
         <td><%= link_to 'Show', photo %></td>
         <td><%= link_to 'Edit', edit_photo_path(photo) %></td>
         <td><%= link_to 'Destroy', photo, method: :delete, data: { confirm: 'Are you sure?' } %></td>

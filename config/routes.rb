@@ -7,8 +7,8 @@ Rails.application.routes.draw do
   # act as votable gem
   resources  :photos do
   member do
-    put "like", to: "photo#upvote"
-    put "dislike", to: "photo#downvote"
+    put "like", to: "photos#upvote"
+    put "dislike", to: "photos#downvote"
     end
   end
 

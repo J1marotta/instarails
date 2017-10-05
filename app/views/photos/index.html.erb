@@ -1,45 +1,53 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Your Feed </h1>
+<h1>Your Feed
+</h1>
 
-<table class= "table text-center">
-  <thead>
-    <tr>
-      <th><strong>Image data</strong></th>
-      <th><strong>UserName</strong></th>
-      <th><strong>Caption</strong></th>
-      <th colspan="5"></th>
-      <br>
-    </tr>
+<table class="table text-center">
+	<thead>
+		<tr>
+			<th>
+				<strong>Image data</strong>
+			</th>
+			<th>
+				<strong>UserName</strong>
+			</th>
+			<th>
+				<strong>Caption</strong>
+			</th>
+			<th colspan="5"></th>
+			<br>
+		</tr>
 
-  </thead>
-<br>
-  <tbody>
-    <% @photos.each do |photo| %>
-      <tr>
-        <td><img src=" <%=photo.image_url %>"></td>
-        <td><%= current_user.username %></td>
-        <td><%= photo.caption %></td>
+	</thead>
+	<br>
+	<tbody>
+		<% @photos.each do |photo| %>
+		<tr>
+			<td><img src=" <%=photo.image_url %>"></td>
+			<td><%= current_user.username %></td>
+			<td><%= photo.caption %></td>
+
+			<!--Below uses the act as votable gem  -->
+			<td>
+				<% if current_user.liked? photo %>
+				<%= link_to " Unlike 💔", dislike_photo_path(photo), class: 'vote', method: :put %>
+			<% else %>
+				<%= link_to " Like ❤️", like_photo_path(photo), class: 'vote', method: :put %>
+				<% end %>
+			</td>
+      <!-- Number of likes -->
+			<td><%= photo.get_likes.size %></td>
+      <td><%= time_ago_in_words(photo.created_at) %></td>
 
 
-        <!--Below uses the act as votable gem  -->
-        <td><%= link_to like_photo_path(photo), method: :put do %>
-          ❤️
-          <%= photo.get_upvotes.size %>
-        <% end %>
+			<td><%= link_to 'Show', photo %></td>
+			<td><%= link_to 'Edit', edit_photo_path(photo) %></td>
+			<td><%= link_to 'Destroy', photo, method: :delete, data: { confirm: 'Are you sure?' } %></td>
 
-        <%= link_to dislike_photo_path(photo), method: :put do %>
-          💔
-          <%= photo.get_downvotes.size %>
-        <% end %></td>
-
-        <td><%= link_to 'Show', photo %></td>
-        <td><%= link_to 'Edit', edit_photo_path(photo) %></td>
-        <td><%= link_to 'Destroy', photo, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-
-      </tr>
-    <% end %>
-  </tbody>
+		</tr>
+		<% end %>
+	</tbody>
 </table>
 
 <br>

@@ -26,13 +26,24 @@ class PhotosController < ApplicationController
   def upvote
     @photo = Photo.find(params[:id])
     @photo.upvote_by current_user
-    redirect_to @photos
+
+    if request.xhr?
+      head :ok
+    else
+      redirect_to @photo
+    end
+
   end
 
   def downvote
     @photo = Photo.find(params[:id])
     @photo.downvote_by current_user
-    redirect_to @photos
+
+    if request.xhr?
+      head :ok
+    else
+      redirect_to @photo
+    end
   end
 
 

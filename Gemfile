@@ -9,6 +9,11 @@ end
 gem 'devise'
 # adding shrine gem
 gem "shrine"
+#jquery 
+gem 'jquery-rails'
+
+# bootstrap
+gem 'bootstrap', '~> 4.0.0.beta'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.1.4'

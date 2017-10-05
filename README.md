@@ -1,24 +1,53 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Implementing 'Shrine gem'
 
-Things you may want to cover:
+add to your gemfile
 
-* Ruby version
+```rb
+# Gemfile
+gem "shrine"
+```
 
-* System dependencies
+Implementing an instagram duplicate application on rails.
+Week 8 of Coder Academy in Sydney
 
-* Configuration
+Warning : the documentation for the 'Shrine gem' is super cryptic.
 
-* Database creation
+ to implement the gem you need to fun the following steps:
+First
+`rails g scaffold Photo image_data:text user:references caption`
+this generates our Photo controller models and views
 
-* Database initialization
 
-* How to run the test suite
+now create a new initializer inside config called shrine.rb
+ fill it with the following:
 
-* Services (job queues, cache servers, search engines, etc.)
 
-* Deployment instructions
+```rb
+require "shrine"
+require "shrine/storage/file_system"
 
-* ...
+Shrine.storages = {
+  cache: Shrine::Storage::FileSystem.new("public", prefix: "uploads/cache"), # temporary
+  store: Shrine::Storage::FileSystem.new("public", prefix: "uploads/store"), # permanent
+}
+
+Shrine.plugin ::activerecord
+```
+
+create a new model image_uploader.rb
+paste the following:
+```rb
+class ImageUploader < Shrine
+  # plugins and uploading logic
+end
+```
+
+create another model called photo.rb
+paste the following:
+```rb
+class Photo < Sequel::Model # ActiveRecord::Base
+  include ImageUploader::Attachment.new(:image) # adds an `image` virtual attribute
+end
+```

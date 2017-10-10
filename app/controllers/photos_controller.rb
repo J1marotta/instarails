@@ -14,7 +14,11 @@ class PhotosController < ApplicationController
 
   # GET /photos/new
   def new
-    @photo = Photo.new
+    puts "current_user: #{current_user}"
+    @data = {
+      photo: Photo.new,
+      user: current_user
+    }
   end
 
   # GET /photos/1/edit
@@ -26,24 +30,14 @@ class PhotosController < ApplicationController
   def upvote
     @photo = Photo.find(params[:id])
     @photo.upvote_by current_user
-
-    if request.xhr?
-      head :ok
-    else
-      redirect_to @photo
-    end
+    redirect_to :root
 
   end
 
   def downvote
     @photo = Photo.find(params[:id])
     @photo.downvote_by current_user
-
-    if request.xhr?
-      head :ok
-    else
-      redirect_to @photo
-    end
+    redirect_to :root
   end
 
 
@@ -73,12 +67,12 @@ class PhotosController < ApplicationController
   # PATCH/PUT /photos/1.json
   def update
     respond_to do |format|
-      if @photo.update(photo_params)
-        format.html { redirect_to @photo, notice: 'Photo was successfully updated.' }
-        format.json { render :show, status: :ok, location: @photo }
+      if @data[:photo].update(photo_params)
+        format.html { redirect_to @data[:photo], notice: 'Photo was successfully updated.' }
+        format.json { render :show, status: :ok, location: @data[:photo] }
       else
         format.html { render :edit }
-        format.json { render json: @photo.errors, status: :unprocessable_entity }
+        format.json { render json: @data[:photo].errors, status: :unprocessable_entity }
       end
     end
   end
@@ -86,7 +80,7 @@ class PhotosController < ApplicationController
   # DELETE /photos/1
   # DELETE /photos/1.json
   def destroy
-    @photo.destroy
+    @data[:photo].destroy
     respond_to do |format|
       format.html { redirect_to photos_url, notice: 'Photo was successfully destroyed.' }
       format.json { head :no_content }
@@ -96,11 +90,15 @@ class PhotosController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_photo
-      @photo = Photo.find(params[:id])
+      # @photo = Photo.find(params[:id])
+      @data = {
+        photo: Photo.find(params[:id]),
+        user: current_user
+      }
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def photo_params
-      params.require(:photo).permit(:image, :user_id, :caption)
+      params.require(:photo).permit(:image, :user_id, :caption, :image_data)
     end
 end

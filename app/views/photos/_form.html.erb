@@ -1,10 +1,10 @@
-<%= form_with(model: photo, local: true) do |form| %>
-  <% if photo.errors.any? %>
+<%= form_with(model: data[:photo], local: true) do |form| %>
+  <% if data[:photo].errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(photo.errors.count, "error") %> prohibited this photo from being saved:</h2>
+      <h2><%= pluralize(data[:photo].errors.count, "error") %> prohibited this photo from being saved:</h2>
 
       <ul>
-      <% photo.errors.full_messages.each do |message| %>
+      <% data[:photo].errors.full_messages.each do |message| %>
         <li><%= message %></li>
       <% end %>
       </ul>
@@ -13,10 +13,13 @@
 
   <div class="field">
     <%= form.label :image_data %>
+    <%= form.hidden_field :image, value: data[:photo].cached_image_data if data[:photo].respond_to?('cached_image_data') %>
     <%= form.file_field :image %>
   </div>
 
-
+  <div class="field">
+    <%= form.hidden_field :user_id, value: data[:user].id  %>
+  </div>
 
   <div class="field">
     <%= form.label :caption %>

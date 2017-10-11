@@ -1,12 +1,15 @@
 Rails.application.routes.draw do
-  resources :posts
 
   devise_for :users
 	root to: "photos#index"
 
-  # act as votable gem
+
+  # nested routes allow for new_photo_comment routes so the comments are attached to the photos
+
   resources  :photos do
+    resources :comments
   member do
+    # act as votable gem
     put "like", to: "photos#upvote"
     put "dislike", to: "photos#downvote"
     end

@@ -1,4 +1,4 @@
-class Photo < ActiveRecord::Base
+class Photo < ApplicationRecord
   include ImageUploader::Attachment.new(:image) # adds an `image` virtual attribute
   belongs_to :user
   default_scope -> { order(created_at: :desc) }

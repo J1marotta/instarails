@@ -1,0 +1,56 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Your Feed
+</h1>
+
+<table class="table text-center table-responsive">
+	<thead>
+		<tr>
+			<th>
+				<strong>Image data</strong>
+			</th>
+			<th>
+				<strong>UserName</strong>
+			</th>
+			<th>
+				<strong>Caption</strong>
+			</th>
+			<th colspan="5"></th>
+			<br>
+		</tr>
+
+	</thead>
+	<br>
+	<tbody>
+		<% @photos.each do |photo| %>
+		<tr>
+			<!--Photo   -->
+			<td><%= image_tag photo.image_url %></td>
+
+			<td><%= photo.caption %></td>
+
+			<!--Below uses the act as votable gem  -->
+			<td>
+				<% if photo.liked_by current_user %>
+				<%= link_to " Unlike 💔", dislike_photo_path(photo), class: 'vote', method: :put %>
+			<% else %>
+				<%= link_to " Like ❤️", like_photo_path(photo), class: 'vote', method: :put %>
+				<% end %>
+			</td>
+      <!-- Number of likes -->
+			<td><%= photo.get_likes.size %></td>
+      <td><%= time_ago_in_words(photo.created_at) %></td>
+			<!--options  -->
+			<td><%= link_to 'Show', photo %></td>
+
+			<!-- If you own the photo you can edit or delete it  -->
+				<% if owns_photo?(photo) %>
+					<td><%= link_to 'Edit', edit_photo_path(photo) %></td>
+					<td><%= link_to 'Delete', photo, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+				<% end %>
+		</tr>
+		<% end %>
+	</tbody>
+</table>
+
+<br>

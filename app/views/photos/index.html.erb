@@ -3,7 +3,7 @@
 <h1>Your Feed
 </h1>
 
-<table class="table text-center">
+<table class="table text-center table-responsive">
 	<thead>
 		<tr>
 			<th>
@@ -24,7 +24,7 @@
 	<tbody>
 		<% @photos.each do |photo| %>
 		<tr>
-			<!--  -->
+			<!--Photo   -->
 			<td><%= image_tag photo.image_url %></td>
 
 			<td><%= photo.caption %></td>
@@ -40,14 +40,12 @@
       <!-- Number of likes -->
 			<td><%= photo.get_likes.size %></td>
       <td><%= time_ago_in_words(photo.created_at) %></td>
-
-
-
-			<% if photo.user.id == current_user.id %>
+			<!--options  -->
 			<td><%= link_to 'Show', photo %></td>
-			<td><%= link_to 'Edit', edit_photo_path(photo) %></td>
-			<td><%= link_to 'Destroy', photo, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-			<% end %>
+				<% if owns_photo?(photo) %>
+					<td><%= link_to 'Edit', edit_photo_path(photo) %></td>
+					<td><%= link_to 'Delete', photo, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+				<% end %>
 		</tr>
 		<% end %>
 	</tbody>

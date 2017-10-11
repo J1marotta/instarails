@@ -42,6 +42,8 @@
       <td><%= time_ago_in_words(photo.created_at) %></td>
 			<!--options  -->
 			<td><%= link_to 'Show', photo %></td>
+
+			<!-- If you own the photo you can edit or delete it  -->
 				<% if owns_photo?(photo) %>
 					<td><%= link_to 'Edit', edit_photo_path(photo) %></td>
 					<td><%= link_to 'Delete', photo, method: :delete, data: { confirm: 'Are you sure?' } %></td>

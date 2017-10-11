@@ -4,7 +4,20 @@ git_source(:github) do |repo_name|
   repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?("/")
   "https://github.com/#{repo_name}.git"
 end
+#adding socialise gem
+gem "acts_as_votable", '~> 0.10.0'
 
+
+
+#using devise gem for authorisation
+gem 'devise'
+# adding shrine gem
+gem "shrine"
+#jquery
+gem 'jquery-rails'
+
+# bootstrap
+gem 'bootstrap', '~> 4.0.0.beta'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.1.4'
@@ -39,6 +52,8 @@ group :development, :test do
   # Adds support for Capybara system testing and selenium driver
   gem 'capybara', '~> 2.13'
   gem 'selenium-webdriver'
+
+
 end
 
 group :development do

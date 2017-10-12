@@ -1,56 +1,55 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Your Feed
-</h1>
+<h1>Your Feed</h1>
+<div class="text-center">
 
-<table class="table text-center table-responsive">
-	<thead>
-		<tr>
-			<th>
-				<strong>Image data</strong>
-			</th>
-			<th>
-				<strong>UserName</strong>
-			</th>
-			<th>
-				<strong>Caption</strong>
-			</th>
-			<th colspan="5"></th>
+	<% @photos.each do |photo| %>
+
+	<tr>
+		<!--  Create a card for each photo inside the table and in the center  -->
+		<div class="card mx-auto col-12 col-7" style="width: 200px">
+			<!-- set the image  in the first row  -->
 			<br>
-		</tr>
+			<%= image_tag photo.image_url, class:"card-img-top img-fluid " %>
 
-	</thead>
-	<br>
-	<tbody>
-		<% @photos.each do |photo| %>
-		<tr>
-			<!--Photo   -->
-			<td><%= image_tag photo.image_url %></td>
+			<div class="card-block">
+				<!-- Caption in second row  -->
+				<p class="card-text">
+					<%= photo.caption  %>
+				</p>
+			</div>
+			<!--third and bottom row  -->
+			<div class="card-block">
+				<!-- likes button   -->
+				<td>
+					<% if photo.liked_by current_user %>
+					<%= link_to "♡", dislike_photo_path(photo), class: 'vote', method: :put %>
+				<% else %>
+					<%= link_to "❤️", like_photo_path(photo), class: 'vote', method: :put %>
+					<% end %>
+					<!-- Number of likes -->
+					<td><%= photo.get_likes.size %></td>
+				</td>
+			</div>
+			<div class="card-footer">
 
-			<td><%= photo.caption %></td>
+				<!-- Time created -->
+				<td><%= time_ago_in_words(photo.created_at)  %></td>
+				<br>
+				<!--options  -->
+				<td><%= link_to '💬', photo_comments_path(photo) %></td>
 
-			<!--Below uses the act as votable gem  -->
-			<td>
-				<% if photo.liked_by current_user %>
-				<%= link_to " Unlike 💔", dislike_photo_path(photo), class: 'vote', method: :put %>
-			<% else %>
-				<%= link_to " Like ❤️", like_photo_path(photo), class: 'vote', method: :put %>
-				<% end %>
-			</td>
-      <!-- Number of likes -->
-			<td><%= photo.get_likes.size %></td>
-      <td><%= time_ago_in_words(photo.created_at) %></td>
-			<!--options  -->
-			<td><%= link_to 'Show', photo %></td>
-
-			<!-- If you own the photo you can edit or delete it  -->
+				<!-- If you own the photo you can edit or delete it  -->
 				<% if owns_photo?(photo) %>
-					<td><%= link_to 'Edit', edit_photo_path(photo) %></td>
-					<td><%= link_to 'Delete', photo, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+				<td><%= link_to '✎', edit_photo_path(photo) %></td>
+				<td><%= link_to '🗑️', photo, method: :delete, data: { confirm: 'Are you sure?' } %></td>
 				<% end %>
-		</tr>
-		<% end %>
-	</tbody>
-</table>
 
-<br>
+			</div>
+
+		</div>
+		<br>
+		<br>
+		<br>
+		<% end %>
+	</div>

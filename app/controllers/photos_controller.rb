@@ -38,11 +38,6 @@ class PhotosController < ApplicationController
   end
 
 
-
-
-
-
-
   # POST /photos
   # POST /photos.json
   def create

@@ -1,18 +1,11 @@
-<h1>Photo Comments</h1>
+<h1>
+	Photo Comments</h1>
 
 <%= image_tag @photo.image_url, width: 200 %>
 
 <% @comments.each do |comment|  %>
 <li>
 	<%= comment.content %>
-	<% if owns_photo?(comment) %>
-	<li>
-			<!-- <%#= link_to '✎', edit_photo_comment_url(@photo.comment) %> -->
-	</li>
-	<li>
-	<%= link_to '🗑️', photo_comment_url, method: :delete, data: { confirm: 'Are you sure?' } %>
-	</li>
-	<% end %>
 </li>
 <% end  %>
 

@@ -2,24 +2,20 @@
 
 <%= image_tag @photo.image_url, width: 200 %>
 
-<% @comments.each do |comment|  %>
+<% @photo.comments.each do |comment|  %>
 <li>
 	<%= comment.content %>
 	<% if owns_photo?(comment) %>
-	<li>
-			<!-- <%#= link_to '✎', edit_photo_comment_url(@photo.comment) %> -->
-	</li>
-	<li>
-	<%= link_to '🗑️', photo_comment_url, method: :delete, data: { confirm: 'Are you sure?' } %>
+	<!--If you own the comment you can edit it and delete  -->
+		<%= link_to '✏️', edit_photo_comment_path(@photo,comment) %>
+		<%= link_to '🗑️', photo_comment_url(@photo,comment), method: :delete, data: { confirm: 'Are you sure?' } %>
 	</li>
 	<% end %>
-</li>
 <% end  %>
 
 <%= form_with(model: [@photo, @comment], local: true) do |form| %>
 
 <div class="form-group">
-	<%= form.label :content %>
 	<%= form.text_area :content, class: 'form-control' %>
 </div>
 

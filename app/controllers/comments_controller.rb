@@ -1,7 +1,7 @@
 class CommentsController < ApplicationController
 
 	#  Define our set action in private but do it before we trigger any other methods, so we don't get 'nil' errors
-	before_action :set_photo, only: [:create]
+	before_action :set_photo, only: [:create, :destroy]
 
 
 	def index
@@ -38,7 +38,8 @@ class CommentsController < ApplicationController
 	end
 
 	def destroy
-		@photo.comments.destroy!
+		@comment = @photo.comments.find(params[:id])
+		@comment.destroy
 	end
 
 	private

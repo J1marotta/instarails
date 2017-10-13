@@ -31,6 +31,8 @@ class CommentsController < ApplicationController
 
 	end
 
+
+
 	def edit
 	end
 
@@ -40,6 +42,7 @@ class CommentsController < ApplicationController
 	def destroy
 		@comment = @photo.comments.find(params[:id])
 		@comment.destroy
+		redirect_to photo_comments_path(@photo)
 	end
 
 	private

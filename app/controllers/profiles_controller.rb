@@ -36,6 +36,18 @@ class ProfilesController < ApplicationController
   end
 
   def update
+    @profile = Profile.find_by(user: current_user)
+    @profile = Profile.new(user: current_user) if @profile.nil?
+
+    respond_to do |format|
+      if @profile.update(profile_params)
+        format.html { redirect_to profile_path, notice: 'Photo was successfully created.' }
+
+      else
+        format.html { redirect_to edit_profile_path, notice: "There was an error, profile couldn't save" }
+
+      end
+    end
   end
 
   def destroy

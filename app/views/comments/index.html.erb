@@ -9,7 +9,12 @@
 	<%= comment.content %>
 
 	<li class="undertext">
-		<%= time_ago_in_words(comment.created_at)%> by <%= comment.user.email  %>
+		<!--when was it written  -->
+		<%= time_ago_in_words(comment.created_at)%> by
+
+		 <!--If they own the comment show their profile else show the user profile  -->
+		 <%= link_to comment.user.id, user_path(comment.user.id)  %>
+
 	</li>
 
 	<% if owns_photo?(comment) %>

@@ -1,0 +1,24 @@
+<h1>
+	Photo Comments
+</h1>
+
+<%= form_with(model: [@photo, comment]) do |form| %>
+
+	<% if @photo.comment.errors.any? %>
+	<div id="error_explanation">
+		<h2><%= pluralize(@photo.comment.errors.count, "error") %>
+			prohibited this photo from being saved:</h2>
+
+		<% @photo.comment.errors.full_messages.each do |message| %>
+		<li><%= message %></li>
+		<% end %>
+	</ul>
+	</div>
+	<% end %>
+
+	<% @comments.each do |comment|  %>
+	<li>
+	<%= comment.content %>
+	</li>
+	<% end  %>
+<% end %>

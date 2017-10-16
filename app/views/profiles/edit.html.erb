@@ -1,0 +1,43 @@
+
+<%= form_with(model: @profile, url: profile_url, local: true) do |form| %>
+  <% if @profile.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@profile.errors.count, "error") %> prohibited this photo from being saved:</h2>
+
+      <ul>
+      <% @profile.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+
+  <div class="form-group">
+    <%= form.hidden_field :user_id, value: :user_id %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :username %>
+    <%= form.text_field :username, class: 'form-control' %>
+  </div>
+
+
+	<div class="form-group">
+    <%= form.label :first_name %>
+    <%= form.text_field :first_name, class: 'form-control' %>
+  </div>
+
+	<div class="form-group">
+    <%= form.label :last_name %>
+    <%= form.text_field :last_name, class: 'form-control' %>
+  </div>
+
+	<div class="form-group">
+    <%= form.label :bio %>
+    <%= form.text_area :bio, class: 'form-control' %>
+
+  <div class="actions">
+    <%= form.submit class: "btn-primary" %>
+  </div>
+<% end %>

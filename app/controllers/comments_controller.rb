@@ -32,14 +32,35 @@ class CommentsController < ApplicationController
 	end
 
 	def edit
+		#   instanstiate our instance variables for our form in our edit function
+
+		# find the photo , then find the comments attached that photos
+		@photo = Photo.find(params[:photo_id])
+		@comment = @photo.comments.find(params[:id])
+
 	end
 
 	def update
+		# find the comment again, and then allow to edit it
+		@photo = Photo.find(params[:photo_id])
+		@comment = @photo.comments.find(params[:id])
+
+		#  check if it updates
+		respond_to do |format|
+      if @comment.update(comment_params)
+        format.html { redirect_to photo_comments_path(@photo), notice: 'Comment was edited.' }
+
+      else
+        format.html { redirect_to edit_photo_comment(@photo), notice: "There was an error, comment couldn't save" }
+
+      end
+    end
 	end
 
 	def destroy
 		@comment = @photo.comments.find(params[:id])
 		@comment.destroy
+		redirect_to photo_path(@photo)
 	end
 
 	private
@@ -49,7 +70,7 @@ class CommentsController < ApplicationController
     end
 
 		def comment_params
-			params.require(:comment).permit(:content, :photo_id, :user_id)
+			params.require(:comment).permit(:content, :photo_id, :user_id, :comment_id)
 		end
 
 

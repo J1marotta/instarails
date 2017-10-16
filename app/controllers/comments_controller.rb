@@ -48,6 +48,7 @@ class CommentsController < ApplicationController
 		#  check if it updates
 		respond_to do |format|
       if @comment.update(comment_params)
+				# if you save redirect back to the photo comments show route.
         format.html { redirect_to photo_comments_path(@photo), notice: 'Comment was edited.' }
 
       else
@@ -60,7 +61,7 @@ class CommentsController < ApplicationController
 	def destroy
 		@comment = @photo.comments.find(params[:id])
 		@comment.destroy
-		redirect_to photo_path(@photo)
+		redirect_to photo_comments_path(@photo)
 	end
 
 	private

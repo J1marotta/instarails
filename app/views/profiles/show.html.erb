@@ -1,7 +1,21 @@
+<h1>Profile</h1>
 
 <p><strong>Username: </strong></p> <%= @profile.username %>
 <p><strong>Name:</strong></p>
 <%= @profile.first_name + ' ' + @profile.last_name %>
 
-<p><strong>Bio</strong></p>
-<%= @profile.bio %>
+<div class="form-group">
+	<p><strong>Bio</strong></p>
+	<%= @profile.bio %>
+</div>
+
+<br>
+<br>
+<br>
+
+<div class="form-group">
+	<%= link_to 'Home', photos_path %>
+	||
+	<%= link_to 'Edit', edit_profile_path %>
+
+</div>

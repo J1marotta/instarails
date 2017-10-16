@@ -15,4 +15,10 @@
 <br>
 <br>
 
-<%= link_to 'Back', photos_path %>
+<div class="form-group">
+	<%= link_to 'Back', photos_path %>
+	||
+	<% if current_user %>
+		<%= link_to 'Edit', edit_profile_path %>
+	<% end %>
+</div>

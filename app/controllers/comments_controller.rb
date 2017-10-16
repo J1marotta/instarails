@@ -31,6 +31,8 @@ class CommentsController < ApplicationController
 
 	end
 
+
+
 	def edit
 		#   instanstiate our instance variables for our form in our edit function
 

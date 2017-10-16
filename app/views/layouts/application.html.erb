@@ -26,9 +26,15 @@
 						<% if current_user %>
 							<!-- New posts -->
 						<li class="nav-item">
+							<!-- New post   -->
 							<%= link_to "New Post", new_photo_path, class: "nav-link" %>
 						</li>
 						<li class="nav-item">
+							<!-- Profile page   -->
+							<%= link_to "Profile", profile_path, class: "nav-link" %>
+						</li>
+						<li class="nav-item">
+							<!--log out -->
 							<%= link_to "Logout", destroy_user_session_path, method: :delete, data: { confirm: 'Are you sure?' }, class: "nav-link" %>
 						</li>
 					<% else %>

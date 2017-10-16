@@ -1,7 +1,18 @@
+<h1>Your Profile</h1>
 
-<p><strong>Username: </strong></p> <%= @profile.username %>
-<p><strong>Name:</strong></p>
-<%= @profile.first_name + ' ' + @profile.last_name %>
+<div class="form-group">
+	<p><strong>Username: </strong></p> <%= @profile.username %>
+	<p><strong>Name:</strong></p>
+	<%= @profile.first_name + ' ' + @profile.last_name %>
+</div>
 
-<p><strong>Bio</strong></p>
-<%= @profile.bio %>
+<div class="form-group">
+	<p><strong>Bio</strong></p>
+	<%= @profile.bio %>
+</div>
+
+<br>
+<br>
+<br>
+
+<%= link_to 'Back', photos_path %>

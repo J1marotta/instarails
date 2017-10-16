@@ -1,19 +1,25 @@
 <h1>Photo Comments</h1>
 
 <%= image_tag @photo.image_url, width: 200 %>
+<br>
+<br>
 
 <% @photo.comments.each do |comment|  %>
-	<li>
+<li>
 	<%= comment.content %>
 
+	<li class="undertext">
+		<%= time_ago_in_words(comment.created_at)%> by <%= comment.user.email  %>
+	</li>
 
 	<% if owns_photo?(comment) %>
 	<!--If you own the comment you can edit it and delete  -->
-		<%= link_to '✏️', edit_photo_comment_path(@photo,comment) %>
-		<%= link_to '🗑️', photo_comment_url(@photo,comment), method: :delete, data: { confirm: 'Are you sure?' } %>
-	</li>
-	<% end %>
-
+	<%= link_to '✏️', edit_photo_comment_path(@photo,comment) %>
+	<%= link_to '🗑️', photo_comment_url(@photo,comment), method: :delete, data: { confirm: 'Are you sure?' } %>
+</li>
+<% end %>
+<br>
+<br>
 <% end  %>
 
 
@@ -27,4 +33,5 @@
 	<%= form.submit class: 'btn btn-primary'  %>
 </div>
 
+<%= link_to 'Back', photos_path %>
 <% end %>

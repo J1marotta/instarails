@@ -2,7 +2,7 @@
 	Photo Comments
 </h1>
 
-<%= form_with(model: [@photo, comment]) do |form| %>
+<%= form_with(model: [@photo, @comment]) do |form| %>
 
 	<% if @photo.comment.errors.any? %>
 	<div id="error_explanation">

@@ -8,6 +8,10 @@
 <li>
 	<%= comment.content %>
 
+	<li class="undertext">
+		<%= time_ago_in_words(comment.created_at)%> by <%= comment.user.email  %>
+	</li>
+
 	<% if owns_photo?(comment) %>
 	<!--If you own the comment you can edit it and delete  -->
 	<%= link_to '✏️', edit_photo_comment_path(@photo,comment) %>

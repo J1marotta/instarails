@@ -7,51 +7,50 @@
 
 	<% @photos.each do |photo| %>
 
-	<tr>
-		<!--  Create a card for each photo inside the table and in the center  -->
-		<div class="card mx-auto col-12 col-7" style="width: 200px">
-			<!-- set the image  in the first row  -->
-			<br>
-			<%= image_tag photo.image_url, class:"card-img-top img-fluid " %>
+	<!--  Create a card for each photo inside the table and in the center  -->
+	<div class="card mx-auto rounded cardpic rounded" >
+		<!-- set the image  in the first row  -->
 
-			<div class="card-block">
-				<!-- Caption in second row  -->
-				<p class="card-text">
-					<%= photo.caption  %>
-				</p>
-			</div>
-			<!--third and bottom row  -->
-			<div class="card-block">
-				<!-- likes button   -->
-				<td>
-					<% if photo.liked_by current_user %>
-					<%= link_to "♡", dislike_photo_path(photo), class: 'vote', method: :put %>
-				<% else %>
-					<%= link_to "❤️", like_photo_path(photo), class: 'vote', method: :put %>
-					<% end %>
-					<!-- Number of likes -->
-					<td><%= photo.get_likes.size %></td>
-				</td>
-			</div>
-			<div class="card-footer">
+		<%= image_tag photo.image_url, class:"cardpic" %>
 
-				<!-- Time created -->
-				<td><%= time_ago_in_words(photo.created_at)  %></td>
-				<br>
-				<!--options  -->
-				<td><%= link_to '💬', photo_comments_path(photo) %></td>
-
-				<!-- If you own the photo you can edit or delete it  -->
-				<% if owns_photo?(photo) %>
-				<td><%= link_to '✎', edit_photo_path(photo) %></td>
-				<td><%= link_to '🗑️', photo, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-				<% end %>
-
-			</div>
-
+		<div class="card-block">
+			<!-- Caption in second row  -->
+			<p class="card-text">
+				<%= photo.caption  %>
+			</p>
 		</div>
-		<br>
-		<br>
-		<br>
-		<% end %>
+		<!--third and bottom row  -->
+		<div class="card-block">
+			<!-- likes button   -->
+
+			<% if photo.liked_by current_user %>
+			<%= link_to "♡", dislike_photo_path(photo), class: 'vote', method: :put %>
+		<% else %>
+			<%= link_to "❤️", like_photo_path(photo), class: 'vote', method: :put %>
+			<% end %>
+			<!-- Number of likes -->
+			<%= photo.get_likes.size %>
+		</td>
 	</div>
+	<div class="card-footer">
+
+		<!-- Time created -->
+		<%= time_ago_in_words(photo.created_at)  %>
+		<br>
+		<!--options  -->
+		<%= link_to '💬', photo_comments_path(photo) %>
+
+		<!-- If you own the photo you can edit or delete it  -->
+		<% if owns_photo?(photo) %>
+		<%= link_to '✎', edit_photo_path(photo) %>
+		<%= link_to '🗑️', photo, method: :delete, data: { confirm: 'Are you sure?' } %>
+		<% end %>
+
+	</div>
+
+</div>
+<br>
+<br>
+<br>
+<% end %>
+</div>

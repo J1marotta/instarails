@@ -57,9 +57,12 @@ class PhotosController < ApplicationController
   # PATCH/PUT /photos/1.json
   def update
     respond_to do |format|
-      if @photo.update(photo_params)
+      if is_liking?
+        # Toggle whether this photo is liked by the current user
+        @photo.toggle_liked_by(current_user)
+        format.html { redirect_to photos_path }
+      elsif @photo.update(photo_params)
         format.html { redirect_to @photo, notice: 'Photo was successfully updated.' }
-        format.json { render :show, status: :ok, location: @photo }
       else
         format.html { render :edit }
         format.json { render json: @photo.errors, status: :unprocessable_entity }
@@ -87,4 +90,11 @@ class PhotosController < ApplicationController
     def photo_params
       params.require(:photo).permit(:image, :caption, :image_data)
     end
+
+    def is_liking?
+      #  is there a liked field in the form (our hidden field)
+      # Same as following , there is a toggle button that has a param of liked turn it on and off and toggle the join table.
+      params.require(:photo)[:liked].present?
+    end
+
 end

@@ -22,7 +22,11 @@
 		<!--third and bottom row  -->
 		<div class="card-block">
 			<!-- likes button   -->
-		 LIKES GO HERE
+		<%= form_with(model: photo, method: :patch) do |f| %>
+	   <% liked = photo.liked_by?(current_user) %>
+	   <%= f.hidden_field :liked, value: liked %>
+	   <%= f.button liked ? '♡!' : '❤️' %>
+	 	<% end %>
 	</div>
 	<div class="card-footer">
 		<!--Any comments?  -->

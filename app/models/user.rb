@@ -7,9 +7,6 @@ class User < ApplicationRecord
          has_many :posts
          has_many :photos
          has_one :profile
-         acts_as_voter
-
-
 
   # The people who follow us
   has_and_belongs_to_many :followers, class_name: 'User', join_table: :followers,
@@ -19,7 +16,7 @@ class User < ApplicationRecord
   has_and_belongs_to_many :following, class_name: 'User', join_table: :followers,
   foreign_key: :follower_id, association_foreign_key: :followed_id
 
-
+  # -_______ For following _------
   # Does the user follow us?
   def followed_by?(user)
     followers.exists?(user.id)

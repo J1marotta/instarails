@@ -13,7 +13,7 @@
 		<%= time_ago_in_words(comment.created_at)%> by
 
 		 <!--If they own the comment show their profile else show the user profile  -->
-		 <%= link_to comment.user.id, user_path(comment.user.id)  %>
+		 <%= link_to comment.user.id, user_path(comment.user_id)  %>
 
 	</li>
 

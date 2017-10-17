@@ -39,7 +39,6 @@ class CommentsController < ApplicationController
 		# find the photo , then find the comments attached that photos
 		@photo = Photo.find(params[:photo_id])
 		@comment = @photo.comments.find(params[:id])
-
 	end
 
 	def update

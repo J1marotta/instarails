@@ -1,6 +1,6 @@
 class PhotosController < ApplicationController
 
-  before_action :set_photo, only: [:show, :edit, :update, :destroy]
+  before_action :set_photo, only: [:upvote, :downvote, :show, :edit, :update, :destroy]
 
   # GET /photos
   # GET /photos.json
@@ -25,14 +25,12 @@ class PhotosController < ApplicationController
   # new methods to allow likeing and dislikes
 
   def upvote
-    @photo = Photo.find(params[:id])
     @photo.upvote_by current_user
     redirect_to :root
 
   end
 
   def downvote
-    @photo = Photo.find(params[:id])
     @photo.downvote_by current_user
     redirect_to :root
   end
@@ -87,6 +85,6 @@ class PhotosController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def photo_params
-      params.require(:photo).permit(:image, :user_id, :caption, :image_data)
+      params.require(:photo).permit(:image, :caption, :image_data)
     end
 end

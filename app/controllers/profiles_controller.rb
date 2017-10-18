@@ -31,7 +31,7 @@ class ProfilesController < ApplicationController
 
   def edit
     # find the profile by the current user or create it if it doesn't exist... handy ruby built in function
-    @profile = Profile.find_or_initialize(user: current_user)
+    @profile = Profile.find_or_initialize_by(user: current_user)
   end
 
   def update
